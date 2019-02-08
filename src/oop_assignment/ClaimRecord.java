@@ -1,9 +1,10 @@
 package oop_assignment;
+import java.util.*;
 
 public class ClaimRecord {
-	public static void ClaimRecord() {
+	/*public static void ClaimRecord() {
 		
-	}
+	}*/
 	
 	public static void ApplyClaim() {
 		
@@ -23,7 +24,6 @@ public class ClaimRecord {
 	
 	public static void main(String[] args) {
 		
-
 	}
 
 }
