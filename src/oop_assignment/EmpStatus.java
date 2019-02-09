@@ -1,6 +1,6 @@
 package oop_assignment;
 
-public enum Status {
+public enum EmpStatus {
 	ACTIVE,
 	INACTIVE
 }
