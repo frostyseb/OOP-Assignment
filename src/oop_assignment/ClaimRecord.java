@@ -2,24 +2,28 @@ package oop_assignment;
 import java.util.*;
 import java.text.*;
 public class ClaimRecord {
+	String claimID, empID, claimTypeID, approverID, remark, decisionRemark, date;
+	float amount;
+	Scanner input = new Scanner(System.in);
 	enum Status {
 		PENDING, APPROVED, REJECTED, CANCELLED;
 	}
-	Status stat;
-	public ClaimRecord(Status stat) {
+	Status sts;
+	
+	public ClaimRecord(Status sts) {
 		//constructor
-		this.stat = stat;
+		this.sts = sts;
 	}
 	
-	public void ApplyClaim(float amount, float limit) {
-		//new claim object + details
+	public void ApplyClaim(float limit) {
+		/*create new claim object + details*/
+		
 		//select claim type based on position
 		//enter amount & remark
 		//total amount of same type /> limit
-		String approverID;
-		System.out.println("");
+		//requires validation
 
-		//A > B > C > D
+		//Imagine A > B > C > D
 		if(amount < (0.5 * limit)) {
 			//C approver of D
 		}
@@ -36,22 +40,15 @@ public class ClaimRecord {
 	
 	public void EditClaim() {
 		//enter claimID to edit
-		//claimTypeID, amount, remark (editable)
-		//update Date
-		String claimID, empID, claimTypeID, remark;
-		float amount;
-		Scanner input = new Scanner(System.in);
-		
-		System.out.println("To edit Claim;");
+		System.out.println("Claim search: ");
 		System.out.print("Enter your Claim ID: ");
 		claimID = input.nextLine();
 		System.out.print("Enter your Employee ID: ");
 		empID = input.nextLine();
-		
-		System.out.println("You may edit your Claim type, amount & remark.");
-		
+				
 		//editing part, unsure
 		
+		//claimTypeID, amount, remark (editable)		
 		System.out.println("Enter your new Claim type: ");
 		claimTypeID = input.nextLine();
 		System.out.println("Enter your new amount: ");
@@ -64,25 +61,51 @@ public class ClaimRecord {
 	}
 	
 	public void ApproveClaim() {
-
+		/*unsure, confused*/
+		
+		System.out.println("Claim search: ");
+		System.out.print("Enter your Claim ID: ");
+		claimID = input.nextLine();
+		System.out.print("Enter your Employee ID: ");
+		empID = input.nextLine();
+		
+		//check PENDING claims
+		
+		System.out.print("Enter A to approve and R to reject: ");
+		String approve = input.next();
+		char appr = approve.charAt(0);
+		
+		if(appr == 'A' || appr == 'a') {
+			System.out.println("Claim status: " + Status.APPROVED);
+		}
+		else if(appr == 'R' || appr == 'a') {
+			System.out.println("Claim status:" + Status.REJECTED);
+		}
+		
+		System.out.println("Remarks: ");
+		decisionRemark = input.nextLine();
 	}
 	
 	public void CancelClaim() {
 		//enter claimID to cancel claim
 		DisplayClaim();
-		String claimID;
-		Scanner input = new Scanner(System.in);
 		
-		System.out.print("Enter your Claim ID to cancel the claim :");
+		System.out.println("Claim search: ");
+		System.out.print("Enter your Claim ID: ");
 		claimID = input.nextLine();
+		System.out.print("Enter your Employee ID: ");
+		empID = input.nextLine();
+		
+		//Search for claim
+		
+		System.out.println("Claim status: " + Status.CANCELLED);
 	}
 	
 	public void DisplayClaim() {
-		//list only PENDING
-		//show date
-	    SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");  
+		/*list only PENDING*/
+	    SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");  
 	    Date date = new Date();
-		switch(stat) {
+		switch(sts) {
 			case PENDING:
 				//print out the claim records + date
 				break;
@@ -91,18 +114,4 @@ public class ClaimRecord {
 		}
 
 	}
-	
-	public void main(String[] args) {
-		String claimID;
-		String empID;
-		String claimTypeID;
-		String approverID;
-		String remark;
-		String decisionRemark;
-		String date;
-		float amount;
-
-		
-	}
-
 }
