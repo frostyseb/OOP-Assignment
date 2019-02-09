@@ -5,8 +5,14 @@ import java.sql.*;
 public class user {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/employee", "root", "");
+			Statement stmt = conn.createStatement();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
