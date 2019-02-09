@@ -10,7 +10,9 @@ public class Employee {
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
-		
+			
+			
+			
 			System.out.print("Enter your empID: ");
 			Scanner input = new Scanner(System.in);
 			String emp = input.nextLine();
@@ -32,4 +34,7 @@ public class Employee {
 
 		
 	}
+	
 }
+
+
