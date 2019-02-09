@@ -1,6 +1,8 @@
 package oop_assignment;
+
 import java.util.*;
 import java.text.*;
+
 public class ClaimRecord {
 	String claimID, empID, claimTypeID, approverID, remark, decisionRemark, date;
 	float amount;
@@ -16,12 +18,26 @@ public class ClaimRecord {
 	}
 	
 	public void ApplyClaim(float limit) {
-		/*create new claim object + details*/
+		/*create new claim object + details
+		total amount of same type /> limit
+		requires validation*/
 		
 		//select claim type based on position
+		System.out.print("Enter your Employee ID: ");
+		empID = input.nextLine();
+		
+		System.out.println("The available claim types are.....");
+		System.out.print("Select a claim type: ");
+		//claimTypeID = input.nextLine(); - unsure for this part
+		
 		//enter amount & remark
-		//total amount of same type /> limit
-		//requires validation
+		System.out.print("Enter your amount: ");
+		amount = input.nextFloat();
+		
+		System.out.print("Enter a remark: ");
+		remark = input.nextLine();
+		
+		//create the claim object
 
 		//Imagine A > B > C > D
 		if(amount < (0.5 * limit)) {
@@ -53,7 +69,7 @@ public class ClaimRecord {
 		claimTypeID = input.nextLine();
 		System.out.println("Enter your new amount: ");
 		amount = input.nextFloat();
-		System.out.println("Any remarks? ");
+		System.out.println("Enter new remark: ");
 		remark = input.nextLine();
 		
 		DisplayClaim();
