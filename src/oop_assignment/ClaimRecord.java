@@ -1,7 +1,10 @@
 package oop_assignment;
 
 import java.util.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.text.*;
 
 public class ClaimRecord {
@@ -38,9 +41,14 @@ public class ClaimRecord {
 				String claimName = rs.getString("claimTypeName");
 				
 				System.out.println("\nThe type of claims available:");
-				System.out.print(claimID + "\t");
-				System.out.println(claimName);
+				System.out.println("Claim Type ID\tClaim Type\tDate");
+				System.out.print(claimID + "\t\t");
+				System.out.print(claimName + "\t");
 			}
+			
+			Date date = new Date();
+			SimpleDateFormat simpleDF = new SimpleDateFormat("EEE MMM dd, yyyy");
+			System.out.println(simpleDF.format(date));
 			
 			stmt.close();
 		}catch(Exception e) {
@@ -115,8 +123,7 @@ public class ClaimRecord {
 	
 	public void DisplayClaim() {
 		/*list only PENDING*/
-	    SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");  
-	    Date date = new Date();
+	    
 		switch(sts) {
 			case PENDING:
 				//print out the claim records + date
