@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import java.text.*;
 
 public class ClaimRecord {
 	String claimID, empID, claimTypeID, approverID, remark, decisionRemark, date;
@@ -14,20 +13,20 @@ public class ClaimRecord {
 	enum Status {
 		PENDING, APPROVED, REJECTED, CANCELLED;
 	}
-	Status sts;
+	Status stat;
 	
 	public ClaimRecord() {
 		
 	}
 	
-	public void ApplyClaim(String id) {
+	public void ApplyClaim(String id, float amt, String typeID) {
 		/*create new claim object + details
 		total amount of same type /> limit
 		requires validation*/
 		
 		//select claim type based on position
 		
-		empID = id;
+		
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
@@ -35,22 +34,50 @@ public class ClaimRecord {
 					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT claimTypeID, claimTypeName FROM empdetails INNER JOIN claimtype ON empID = '" + empID + "' AND empdetails.position = claimtype.applicableToPosition");
-			while(rs.next()) {
-				String claimID = rs.getString("claimTypeID");
-				String claimName = rs.getString("claimTypeName");
+			empID = id;
+			amount = amt;
+			
+					
+			if(typeID.equals("CLM001")) {
+				ResultSet rs = stmt.executeQuery("SELECT superiorID, claimLimit FROM empdetails INNER JOIN claimtype ON empdetails.empID = '" + empID + "' AND claimtype.claimTypeID = 'CLM001'");
+				while(rs.next()) {
+					float limit = rs.getFloat("claimLimit");
+					String superID = rs.getString("superiorID");
+					if(amount < (0.5 * limit)) {
+						System.out.println("Your approver ID is " + superID);
+					}
+					else if(amount > (0.5 * limit) && amount < (0.8 * limit)) {
+						ResultSet rs2 = stmt.executeQuery("SELECT superiorID FROM empdetails WHERE empID = '" + superID + "'");
+						while(rs2.next()) {
+							String super2ID = rs2.getString("superiorID");
+							System.out.println("Your approver ID is " + super2ID);
+							break;
+						}
+						break;
+					}
+					else if(amount > (0.8 * limit)) {
+						ResultSet rs2 = stmt.executeQuery("SELECT superiorID FROM empdetails WHERE empID = '" + superID + "'");
+						while(rs2.next()) {
+							String super2ID = rs2.getString("superiorID");
+							ResultSet rs3 = stmt.executeQuery("SELECT superiorID FROM empdetails WHERE empID = '" + super2ID + "'");
+							while(rs3.next()) {
+								String super3ID = rs3.getString("superiorID");
+								System.out.println("Your approver ID is " + super3ID);
+								break;
+							}
+							break;
+						}
+						break;
+					}
+					
+				}
+
+			}
+			else {
 				
-				System.out.println("\nThe type of claims available:");
-				System.out.println("Claim Type ID\tClaim Type\tDate");
-				System.out.print(claimID + "\t\t");
-				System.out.print(claimName + "\t");
 			}
 			
-			Date date = new Date();
-			SimpleDateFormat simpleDF = new SimpleDateFormat("EEE MMM dd, yyyy");
-			System.out.println(simpleDF.format(date));
-			
-			stmt.close();
+			conn.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -124,7 +151,7 @@ public class ClaimRecord {
 	public void DisplayClaim() {
 		/*list only PENDING*/
 	    
-		switch(sts) {
+		switch(stat) {
 			case PENDING:
 				//print out the claim records + date
 				break;
