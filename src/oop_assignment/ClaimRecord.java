@@ -1,6 +1,7 @@
 package oop_assignment;
 
 import java.util.*;
+import java.sql.*;
 import java.text.*;
 
 public class ClaimRecord {
@@ -12,46 +13,41 @@ public class ClaimRecord {
 	}
 	Status sts;
 	
-	public ClaimRecord(Status sts) {
-		//constructor
-		this.sts = sts;
+	public ClaimRecord() {
+		
 	}
 	
-	public void ApplyClaim(float limit) {
+	public void ApplyClaim(String id) {
 		/*create new claim object + details
 		total amount of same type /> limit
 		requires validation*/
 		
 		//select claim type based on position
-		System.out.print("Enter your Employee ID: ");
-		empID = input.nextLine();
 		
-		System.out.println("The available claim types are.....");
-		System.out.print("Select a claim type: ");
-		//claimTypeID = input.nextLine(); - unsure for this part
+		empID = id;
 		
-		//enter amount & remark
-		System.out.print("Enter your amount: ");
-		amount = input.nextFloat();
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/employee", "root", "");
+			Statement stmt = conn.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT claimTypeID, claimTypeName FROM empdetails INNER JOIN claimtype ON empID = '" + empID + "' AND empdetails.position = claimtype.applicableToPosition");
+			while(rs.next()) {
+				String claimID = rs.getString("claimTypeID");
+				String claimName = rs.getString("claimTypeName");
+				
+				System.out.println("\nThe type of claims available:");
+				System.out.print(claimID + "\t");
+				System.out.println(claimName);
+			}
+			
+			stmt.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
-		System.out.print("Enter a remark: ");
-		remark = input.nextLine();
 		
-		//create the claim object
-
-		//Imagine A > B > C > D
-		if(amount < (0.5 * limit)) {
-			//C approver of D
-		}
-		else if(amount > (0.5 * limit) && amount < (0.8 * limit)) {
-			//B approver of D
-		}
-		else if(amount > (0.8 * limit)) {
-			//A approver of D
-		}
-		else {
-			//error
-		}
 	}
 	
 	public void EditClaim() {
