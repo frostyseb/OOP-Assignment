@@ -386,7 +386,7 @@ public class ClaimRecord {
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
 								
-				System.out.println(clID + "\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st);
+				System.out.println(clID + "\t\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -406,7 +406,7 @@ public class ClaimRecord {
 			empID = id;
 			
 			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE empID = '" + empID +"'");
-			System.out.println("\nClaim ID\tClaim Type ID\t\tEmp ID\tDate\tAmount\tRemark\tStatus");
+			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				empID = rs.getString("empID");
@@ -416,7 +416,7 @@ public class ClaimRecord {
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
 								
-				System.out.println(clID + "\t" + empID + "\t\t" + typeID + "\t" + date + "\t" + amt + "\t" + state + "\t" + st);
+				System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st);
 
 			}
 		}catch(Exception e) {
@@ -436,7 +436,7 @@ public class ClaimRecord {
 			claimTypeID = id;
 			
 			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE claimTypeID = '" + claimTypeID +"'");
-			System.out.println("\nClaim ID\tClaim Type ID\t\tEmp ID\tDate\tAmount\tRemark\tStatus");
+			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				empID = rs.getString("empID");
@@ -446,7 +446,7 @@ public class ClaimRecord {
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
 								
-				System.out.println(clID + "\t" + empID + "\t\t" + typeID + "\t" + date + "\t" + amt + "\t" + state + "\t" + st);
+				System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st);
 
 			}
 		}catch(Exception e) {
@@ -466,7 +466,7 @@ public class ClaimRecord {
 			claimID = id;
 			
 			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE claimID = '" + claimID +"'");
-			System.out.println("\nClaim ID\tClaim Type ID\t\tEmp ID\tDate\tAmount\tRemark\tStatus");
+			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				empID = rs.getString("empID");
@@ -476,7 +476,7 @@ public class ClaimRecord {
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
 								
-				System.out.println(clID + "\t" + empID + "\t\t" + typeID + "\t" + date + "\t" + amt + "\t" + state + "\t" + st);
+				System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st);
 
 			}
 		}catch(Exception e) {
