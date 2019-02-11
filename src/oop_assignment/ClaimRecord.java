@@ -254,6 +254,7 @@ public class ClaimRecord {
 			
 			
 			System.out.print("\nEnter new remark: ");
+			input.nextLine();
 			String newState = input.nextLine();
 			
 			typeID = newTypeID;
@@ -366,7 +367,7 @@ public class ClaimRecord {
 	}
 	
 	public void DisplayClaim(String id) {
-		Scanner input = new Scanner(System.in);
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
@@ -378,7 +379,7 @@ public class ClaimRecord {
 			empID = id;
 			
 			ResultSet rs = stmt.executeQuery("SELECT claimID, claimTypeID, amount, remark, claimStatus FROM claimrecord WHERE empID = '" + empID + "' AND claimStatus = 'PENDING'");
-			System.out.println("\nCLaim ID\tClaim Type ID\t\tAmount\tRemark\tStatus");
+			System.out.println("\nCLaim ID\tClaim Type ID\tAmount\tRemark\tStatus");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				typeID = rs.getString("claimTypeID");
@@ -391,7 +392,7 @@ public class ClaimRecord {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		input.close();
+		
 	}
 	
 	public static void DisClm(String id) {
