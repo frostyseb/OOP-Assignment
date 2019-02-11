@@ -22,7 +22,7 @@ public class ClaimRecord {
 	}
 	Status stat;
 	
-	int count = 0;
+	Random rand = new Random();
 	
 	public ClaimRecord() {
 		
@@ -41,7 +41,7 @@ public class ClaimRecord {
 					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
 			
-			int limitFlag = 0, claimTypeFlag = 0;
+			int limitFlag = 0, claimTypeFlag = 0, cIDFlag = 0;
 			float limit = 0, amt = 0;
 			String typeID;
 			Date claimDate = new Date();
@@ -197,8 +197,23 @@ public class ClaimRecord {
 				
 			}
 			
-			count++;
-			claimID = String.format("%05d", count);
+			do {
+				int count = rand.nextInt(99999) + 1;
+				claimID = String.format("%05d", count);
+				rs = stmt.executeQuery("SELECT claimID FROM claimrecord");
+				while(rs.next()) {
+					String cID = rs.getString("claimID");
+					
+					if(claimID.equals(cID)) {
+						cIDFlag = 0;
+						break;
+					}
+					else {
+						cIDFlag = 1;
+					}
+				}
+			}while(cIDFlag == 0);
+			
 			stat = Status.PENDING;
 			approverID = superID;
 			
@@ -261,7 +276,7 @@ public class ClaimRecord {
 		input.close();
 	}
 	
-	public void ApproveClaim(String id) {
+	public void ApproveClaim() {
 		Scanner input = new Scanner(System.in);
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
@@ -269,16 +284,18 @@ public class ClaimRecord {
 					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
 			
-			empID = id;
+
 			String typeID = "", state = "", st = "", clID = "";
 			float amt = 0;
 			
 			
 			System.out.print("Enter claim ID to search: ");
 			clID = input.nextLine();
-		
+			
+			claimID = clID;
+			
 			ResultSet rs = stmt.executeQuery("SELECT claimID, claimTypeID, amount, remark, claimStatus FROM claimrecord WHERE claimID = '" + claimID + "' AND claimStatus = 'PENDING'");
-			System.out.println("\nCLaim ID\tClaim Type ID\t\tAmount\tRemark\tStatus");
+			System.out.println("\nCLaim ID\tClaim Type ID\tAmount\tRemark\tStatus");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				typeID = rs.getString("claimTypeID");
@@ -286,7 +303,7 @@ public class ClaimRecord {
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
 								
-				System.out.println(clID + "\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st);
+				System.out.println(clID + "\t\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st);
 			}
 			
 			System.out.println("Choose from the below: ");

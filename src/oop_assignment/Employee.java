@@ -1,7 +1,5 @@
 package oop_assignment;
 
-import java.util.*;
-import java.sql.*;
 import oop_assignment.UserRole;
 import oop_assignment.EmpStatus;
 

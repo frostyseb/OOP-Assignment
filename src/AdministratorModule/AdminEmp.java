@@ -14,11 +14,11 @@ public class AdminEmp {
 	static EmpStatus stat;
 	static EmpStatus newStat;
 	
-	public static void AddEmp () {
+	public void AddEmp () {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver"); 
+			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
+					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
 
 			Employee emp1 = new Employee ();
@@ -82,7 +82,7 @@ public class AdminEmp {
 		
 	}
 	
-	public static void EditEmp() {
+	public void EditEmp() {
 
 		int eflag = 0;
 		
@@ -123,7 +123,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET pass= '" + newPass + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 					else if(choice==2) {
@@ -134,7 +134,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET name= '" + newName + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 					else if(choice==3) {
@@ -145,7 +145,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET department= '" + newDep + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 					else if(choice==4) {
@@ -156,7 +156,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET position= '" + newPos + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 					else if(choice==5) {
@@ -175,7 +175,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET userRole= '" + newRole + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 					else if(choice==6) {
@@ -194,7 +194,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET stat= '" + newStat + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 					else if(choice==7) {
@@ -205,7 +205,7 @@ public class AdminEmp {
 						String sq1 = "UPDATE empdetails SET superiorID	= '" + newSup + "' WHERE empID ='" +id+"'" ;
 					
 						stmt.executeUpdate(sq1);
-						System.out.println("Data successfully editted!");
+						System.out.println("Data successfully edited!");
 					break;
 					}
 				}
@@ -229,7 +229,7 @@ public class AdminEmp {
 	}
 	
 	
-	public static void DelEmp () {
+	public void DelEmp () {
 		
 		
 		int eflag = 0;

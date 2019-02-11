@@ -3,6 +3,7 @@ package login;
 import java.sql.*;
 import java.util.*;
 import AdministratorModule.Administrator;
+import user.user;
 
 public class login {
 
@@ -25,17 +26,18 @@ public class login {
 				
 				String id = input.nextLine();
 				
-				ResultSet rs = stmt.executeQuery("SELECT empID FROM empdetails");
+				ResultSet rs = stmt.executeQuery("SELECT empID, stat FROM empdetails");
 				while(rs.next()) {
 					String empID = rs.getString("empID");
-					if(id.equals(empID)) {
+					String loginStat = rs.getString("stat");
+					if(id.equals(empID) && loginStat.equals("ACTIVE")) {
 						eflag = 1;
 						break;
 					}
 				}
 				
 				if(eflag == 0) {
-					System.out.println("Employee profile doesn't exist. Please enter again.");
+					System.out.println("Employee profile doesn't exist or the employee profile is inactive. Please enter again.");
 				}
 				else {
 					do {
@@ -49,8 +51,6 @@ public class login {
 							if(pw.equals(pass)) {
 								System.out.println("Password correct.");
 								pflag = 0;	
-								System.out.println();
-								Administrator.Ad();
 								break;
 							}
 							else {
@@ -58,7 +58,17 @@ public class login {
 								pflag = 1;
 							}
 						}
+												
 					}while(pflag == 1);
+					
+					if(id.equals("ADMIN") || id.equals("EMP1101") || id.equals("EMP1102") || id.equals("EMP1103")) {
+						Administrator admin = new Administrator();
+						admin.Ad();
+					}
+					else {
+						user us = new user();
+						us.UserModule(id);;
+					}
 				}
 			}while(eflag == 0);
 			

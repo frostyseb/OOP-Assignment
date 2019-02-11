@@ -3,12 +3,13 @@ package AdministratorModule;
 import java.util.*;
 import AdministratorModule.AdminEmp;
 import AdministratorModule.AdminClaim;
+import oop_assignment.ClaimRecord;
 
 public class Administrator {
 	
 	static Scanner input = new Scanner (System.in);
 	
-	public static void Ad () {
+	public void Ad () {
 		
 		System.out.println("   ADMINISTRATOR");
 		System.out.println("--------------------");
@@ -17,6 +18,7 @@ public class Administrator {
 		System.out.println("1. Employee Records");
 		System.out.println("2. Claim Types Records");
 		System.out.println("3. Claim Records Report");
+		System.out.println("4. Approve Claim");
 		
 		int choice = input.nextInt();
 		
@@ -53,6 +55,10 @@ public class Administrator {
 				}
 			
 		}
+		else if(choice == 4) {
+			ClaimRecord approv = new ClaimRecord();
+			approv.ApproveClaim();
+		}
 		else {
 			System.out.println("Invalid input! Try Again.");
 			System.out.println("--------------------");
@@ -71,16 +77,17 @@ public class Administrator {
 			System.out.println("3. Delete emplyee records");
 			
 			int choice2 = input.nextInt();
+			AdminEmp admin = new AdminEmp();
 			
 			switch (choice2) {
 			case 1 : 
-				AdminEmp.AddEmp();
+				admin.AddEmp();
 				break;
 			case 2 :
-				AdminEmp.EditEmp();
+				admin.EditEmp();
 				break;
 			case 3:
-				AdminEmp.DelEmp();
+				admin.DelEmp();
 				break;
 			}
 			
