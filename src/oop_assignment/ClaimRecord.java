@@ -286,7 +286,7 @@ public class ClaimRecord {
 			Statement stmt = conn.createStatement();
 			
 
-			String typeID = "", state = "", st = "", clID = "";
+			String typeID = "", state = "", st = "", clID = "", decRem;
 			float amt = 0;
 			
 			
@@ -295,16 +295,22 @@ public class ClaimRecord {
 			
 			claimID = clID;
 			
-			ResultSet rs = stmt.executeQuery("SELECT claimID, claimTypeID, amount, remark, claimStatus FROM claimrecord WHERE claimID = '" + claimID + "' AND claimStatus = 'PENDING'");
-			System.out.println("\nCLaim ID\tClaim Type ID\tAmount\tRemark\tStatus");
+			ResultSet rs = stmt.executeQuery("SELECT claimID, claimTypeID, amount, remark, claimStatus, decisionRemark FROM claimrecord WHERE claimID = '" + claimID + "' AND claimStatus = 'PENDING'");
+			System.out.println("\nCLaim ID\tClaim Type ID\tAmount\tRemark\tStatus\t\tDecision Remark");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				typeID = rs.getString("claimTypeID");
 				amt = rs.getFloat("amount");
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
-								
-				System.out.println(clID + "\t\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st);
+				decRem = rs.getString("decisionRemark");
+				
+				if(st.equals("APRROVED") || st.equals("CANCELLED") || st.equals("REJECTED")) {
+					System.out.println(clID + "\t\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st + "\t" + decRem);
+				}
+				else {
+					System.out.println(clID + "\t\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st + "\t\t" + decRem);
+				}
 			}
 			
 			System.out.println("Choose from the below: ");
@@ -326,8 +332,13 @@ public class ClaimRecord {
 			
 			claimID = clID;
 			
-			stmt.executeUpdate("UPDATE claimrecord SET claimStatus = '" + stat + "' WHERE claimID = '" + claimID + "'"); 
+			System.out.print("Enter decision remark: ");
+			input.nextLine();
+			String dRem = input.nextLine();
 			
+			decisionRemark = dRem;
+			
+			stmt.executeUpdate("UPDATE claimrecord SET claimStatus = '" + stat + "', decisionRemark = '" + decisionRemark + "' WHERE claimID = '" + claimID + "'"); 		
 			
 			conn.close();
 			
@@ -401,13 +412,13 @@ public class ClaimRecord {
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
 				Statement stmt = conn.createStatement();
-			String empID = "", typeID = "", date = "", state = "", st = "", clID = "";
+			String empID = "", typeID = "", date = "", state = "", st = "", clID = "", decRem = "";
 			float amt = 0;
 			
 			empID = id;
 			
-			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE empID = '" + empID +"'");
-			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus");
+			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus, decisionRemark FROM claimrecord WHERE empID = '" + empID +"'");
+			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus\t\tDecision Remark");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				empID = rs.getString("empID");
@@ -416,9 +427,14 @@ public class ClaimRecord {
 				amt = rs.getFloat("amount");
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
-								
-				System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st);
-
+				decRem = rs.getString("decisionRemark");
+				
+				if(st.equals("APPROVED") || st.equals("CANCELLED") || st.equals("REJECTED")) {
+					System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st + "\t" + decRem);
+				}
+				else {
+					System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st + "\t\t" + decRem);
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -431,13 +447,13 @@ public class ClaimRecord {
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
 				Statement stmt = conn.createStatement();
-			String empID = "", typeID = "", date = "", state = "", st = "", clID = "";
+			String empID = "", typeID = "", date = "", state = "", st = "", clID = "", decRem = "";
 			float amt = 0;
 			
 			claimTypeID = id;
 			
-			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE claimTypeID = '" + claimTypeID +"'");
-			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus");
+			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus, decisionRemark FROM claimrecord WHERE claimTypeID = '" + claimTypeID +"'");
+			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus\t\tDecision Remark");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				empID = rs.getString("empID");
@@ -446,9 +462,14 @@ public class ClaimRecord {
 				amt = rs.getFloat("amount");
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
-								
-				System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st);
-
+				decRem = rs.getString("decisionRemark");
+				
+				if(st.equals("APPROVED") || st.equals("CANCELLED") || st.equals("REJECTED")) {
+					System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st + "\t" + decRem);
+				}
+				else {
+					System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st + "\t\t" + decRem);
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -461,13 +482,13 @@ public class ClaimRecord {
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
 				Statement stmt = conn.createStatement();
-			String empID = "", typeID = "", date = "", state = "", st = "", clID = "";
+			String empID = "", typeID = "", date = "", state = "", st = "", clID = "", decRem = "";
 			float amt = 0;
 			
 			claimID = id;
 			
-			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE claimID = '" + claimID +"'");
-			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus");
+			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus, decisionRemark FROM claimrecord WHERE claimID = '" + claimID +"'");
+			System.out.println("\nClaim ID\tEmp ID\t\tClaim Type ID\tDate\t\t\tAmount\tRemark\tStatus\t\tDecision Remark");
 			while(rs.next()) {
 				clID = rs.getString("claimID");
 				empID = rs.getString("empID");
@@ -476,9 +497,14 @@ public class ClaimRecord {
 				amt = rs.getFloat("amount");
 				state = rs.getString("remark");
 				st = rs.getString("claimStatus");
-								
-				System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st);
-
+				decRem = rs.getString("decisionRemark");
+				
+				if(st.equals("APPROVED") || st.equals("CANCELLED") || st.equals("REJECTED")) {
+					System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st + "\t" + decRem);
+				}
+				else {
+					System.out.println(clID + "\t\t" + empID + "\t\t" + typeID + "\t\t" + date + "\t" + amt + "\t" + state + "\t" + st + "\t\t" + decRem);
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
