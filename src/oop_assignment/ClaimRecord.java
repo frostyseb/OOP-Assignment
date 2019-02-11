@@ -8,7 +8,13 @@ import java.text.SimpleDateFormat;
 import java.sql.ResultSet;
 
 public class ClaimRecord {
-	String claimID, empID, claimTypeID, date, approverID, remark, decisionRemark;
+	static String claimID;
+	static String empID;
+	static String claimTypeID;
+	String date;
+	String approverID;
+	String remark;
+	String decisionRemark;
 	float amount;
 	Scanner input = new Scanner(System.in);
 	enum Status {
@@ -358,6 +364,96 @@ public class ClaimRecord {
 				st = rs.getString("claimStatus");
 								
 				System.out.println(clID + "\t" + typeID + "\t\t" + amt + "\t" + state + "\t" + st);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void DisClm(String id) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
+				Statement stmt = conn.createStatement();
+			String empID = "", typeID = "", date = "", state = "", st = "", clID = "";
+			float amt = 0;
+			
+			empID = id;
+			
+			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE empID = '" + empID +"'");
+			System.out.println("\nClaim ID\tClaim Type ID\t\tEmp ID\tDate\tAmount\tRemark\tStatus");
+			while(rs.next()) {
+				clID = rs.getString("claimID");
+				empID = rs.getString("empID");
+				typeID = rs.getString("claimTypeID");
+				date = rs.getString("date");
+				amt = rs.getFloat("amount");
+				state = rs.getString("remark");
+				st = rs.getString("claimStatus");
+								
+				System.out.println(clID + "\t" + empID + "\t\t" + typeID + "\t" + date + "\t" + amt + "\t" + state + "\t" + st);
+
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void DisClm2(String id) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
+				Statement stmt = conn.createStatement();
+			String empID = "", typeID = "", date = "", state = "", st = "", clID = "";
+			float amt = 0;
+			
+			claimTypeID = id;
+			
+			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE claimTypeID = '" + claimTypeID +"'");
+			System.out.println("\nClaim ID\tClaim Type ID\t\tEmp ID\tDate\tAmount\tRemark\tStatus");
+			while(rs.next()) {
+				clID = rs.getString("claimID");
+				empID = rs.getString("empID");
+				typeID = rs.getString("claimTypeID");
+				date = rs.getString("date");
+				amt = rs.getFloat("amount");
+				state = rs.getString("remark");
+				st = rs.getString("claimStatus");
+								
+				System.out.println(clID + "\t" + empID + "\t\t" + typeID + "\t" + date + "\t" + amt + "\t" + state + "\t" + st);
+
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void DisClm3(String id) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			Connection conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
+				Statement stmt = conn.createStatement();
+			String empID = "", typeID = "", date = "", state = "", st = "", clID = "";
+			float amt = 0;
+			
+			claimID = id;
+			
+			ResultSet rs = stmt.executeQuery("SELECT claimID, empID, claimTypeID, date, amount, remark, claimStatus FROM claimrecord WHERE claimID = '" + claimID +"'");
+			System.out.println("\nClaim ID\tClaim Type ID\t\tEmp ID\tDate\tAmount\tRemark\tStatus");
+			while(rs.next()) {
+				clID = rs.getString("claimID");
+				empID = rs.getString("empID");
+				typeID = rs.getString("claimTypeID");
+				date = rs.getString("date");
+				amt = rs.getFloat("amount");
+				state = rs.getString("remark");
+				st = rs.getString("claimStatus");
+								
+				System.out.println(clID + "\t" + empID + "\t\t" + typeID + "\t" + date + "\t" + amt + "\t" + state + "\t" + st);
+
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

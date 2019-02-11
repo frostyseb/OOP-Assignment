@@ -3,7 +3,6 @@ package AdministratorModule;
 import java.util.*;
 import AdministratorModule.AdminEmp;
 import AdministratorModule.AdminClaim;
-import oop_assignment.ClaimRecord.*;
 
 public class Administrator {
 	
@@ -28,7 +27,31 @@ public class Administrator {
 			Claim();
 		}
 		else if (choice == 3) {
-			DisplayClaim();
+			System.out.println("Search records by ");
+			System.out.println("1. Employee ID");
+			System.out.println("2. Claim Type ID");
+			System.out.println("3. Claim ID");
+			
+			int choice3 = input.nextInt();
+				if(choice3==1) {
+					System.out.println("Enter employee ID:");
+					String id = input.next();
+					
+					oop_assignment.ClaimRecord.DisClm(id);
+				}
+				else if(choice3==2) {
+					System.out.println("Enter Claim Type ID:");
+					String clm = input.next();
+					
+					oop_assignment.ClaimRecord.DisClm2(clm);
+				}
+				else if (choice3==3) {
+					System.out.println("Enter Claim  ID:");
+					String clmID = input.next();
+					
+					oop_assignment.ClaimRecord.DisClm3(clmID);
+				}
+			
 		}
 		else {
 			System.out.println("Invalid input! Try Again.");
