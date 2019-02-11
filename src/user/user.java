@@ -45,7 +45,7 @@ public class user {
 			
 			
 			ClaimRecord record = new ClaimRecord();
-			
+			record.ApplyClaim(empID);
 			record.EditClaim(empID);
 			
 			input.close();
