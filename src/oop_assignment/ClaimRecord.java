@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 public class ClaimRecord {
 	String claimID, empID, claimTypeID, date, approverID, remark, decisionRemark;
 	float amount;
-	Scanner input = new Scanner(System.in);
+	
 	enum Status {
 		PENDING, APPROVED, REJECTED, CANCELLED;
 	}
@@ -28,7 +28,7 @@ public class ClaimRecord {
 		requires validation*/
 		
 		//select claim type based on position
-		
+		Scanner input = new Scanner(System.in);
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
@@ -112,7 +112,7 @@ public class ClaimRecord {
 			amount = amt;
 			
 			System.out.print("Enter your remark: ");
-			Scanner input = new Scanner(System.in);
+			input.nextLine();
 			String state = input.nextLine();
 			
 			remark = state;
@@ -198,23 +198,24 @@ public class ClaimRecord {
 			
 			stmt.executeUpdate("INSERT INTO claimrecord(claimID, empID, claimTypeID, date, amount, remark, approverID, claimStatus) VALUES('" + claimID + "', '" + empID + "', '" + claimTypeID + "', '" + date + "', " + amount + ", '" + remark + "', '" + approverID + "', '" + stat + "')");
 			
-			input.close();
+			
 			conn.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		
+		input.close();
 	}
 	
 	public void EditClaim(String id) {
+		Scanner input = new Scanner(System.in);
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
 			
-			Scanner input = new Scanner(System.in);
+			
 			empID = id;
 			String typeID = "", state = "", clID = "";
 			float amt = 0;
@@ -245,16 +246,17 @@ public class ClaimRecord {
 			
 			stmt.executeUpdate("UPDATE claimrecord SET claimTypeID = '" + claimTypeID + "', amount = " + amount + ", remark = '" + remark + "' WHERE empID = '" + empID + "' AND claimID = '" + claimID + "'");
 			
-			input.close();
+			
 			conn.close();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		input.close();
 	}
 	
 	public void ApproveClaim(String id) {
+		Scanner input = new Scanner(System.in);
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
@@ -265,7 +267,7 @@ public class ClaimRecord {
 			String typeID = "", state = "", st = "", clID = "";
 			float amt = 0;
 			
-			Scanner input = new Scanner(System.in);
+			
 			System.out.print("Enter claim ID to search: ");
 			clID = input.nextLine();
 		
@@ -302,22 +304,24 @@ public class ClaimRecord {
 			
 			stmt.executeUpdate("UPDATE claimrecord SET claimStatus = '" + stat + "' WHERE claimID = '" + claimID + "'"); 
 			
-			input.close();
+			
 			conn.close();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		input.close();
 	}
 	
 	public void CancelClaim(String id) {
+		Scanner input = new Scanner(System.in);
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee", "root", "");
 			Statement stmt = conn.createStatement();
 			
-			Scanner input = new Scanner(System.in);
+			
 			empID = id;
 			
 			DisplayClaim(empID);
@@ -329,20 +333,22 @@ public class ClaimRecord {
 
 			stmt.executeUpdate("DELETE FROM claimrecord WHERE claimID = '" + claimID + "' AND empID = '" + empID + "'");
 			
-			input.close();
+			
 			conn.close();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		input.close();
 	}
 	
 	public void DisplayClaim(String id) {
+		Scanner input = new Scanner(System.in);
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/employee", "root", "");
-				Statement stmt = conn.createStatement();
+			Statement stmt = conn.createStatement();
 			String typeID = "", state = "", st = "", clID = "";
 			float amt = 0;
 			
@@ -362,5 +368,6 @@ public class ClaimRecord {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		input.close();
 	}
 }
