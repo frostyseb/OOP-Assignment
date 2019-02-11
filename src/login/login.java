@@ -2,6 +2,7 @@ package login;
 
 import java.sql.*;
 import java.util.*;
+import AdministratorModule.Administrator;
 
 public class login {
 
@@ -13,10 +14,11 @@ public class login {
 			
 			Class.forName("com.mysql.jdbc.Driver"); 
 			Connection conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/employee", "root", "");
+					"jdbc:mysql://localhost:3306/employee?useTimezone=true&serverTimezone=UTC", "root", "");
 			Statement stmt = conn.createStatement();
 			
-			System.out.println("Login");
+			System.out.println("\tLOGIN");
+			System.out.println("--------------------");
 			
 			do {
 				System.out.print("Enter your employee ID: ");
@@ -39,14 +41,16 @@ public class login {
 					do {
 						System.out.print("Enter your password: ");
 						String pw = input.nextLine();
-						
+
 						rs = stmt.executeQuery("SELECT pass,empID FROM empdetails WHERE empID = '" + id + "'");
 						
 						while(rs.next()) {
 							String pass = rs.getString("pass");
 							if(pw.equals(pass)) {
 								System.out.println("Password correct.");
-								pflag = 0;
+								pflag = 0;	
+								System.out.println();
+								Administrator.Ad();
 								break;
 							}
 							else {
@@ -58,7 +62,7 @@ public class login {
 				}
 			}while(eflag == 0);
 			
-			input.close();
+			input.close();	
 			conn.close();
 			
 		}catch(Exception e) {

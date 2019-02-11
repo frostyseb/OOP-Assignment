@@ -1,8 +1,6 @@
 package oop_assignment;
 
-import java.io.Serializable;
-
-public class ClaimType implements Serializable {
+public class ClaimType  {
 	
 	public 	String claimTypeID, claimTypeName, appToPosition;
 	float limit;
@@ -41,5 +39,6 @@ public class ClaimType implements Serializable {
 	public float getLimit () {
 		return limit;
 	}
+
 
 }
